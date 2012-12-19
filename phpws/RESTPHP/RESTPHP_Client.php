@@ -65,7 +65,7 @@ class RESTPHP_Client {
 	}
 
 	public function getStatusCode() {
-		print_r(curl_getinfo($this->curlH));
+		//print_r(curl_getinfo($this->curlH));
 		return $this->status_code;
 	}
 
