@@ -1,5 +1,5 @@
 <?php
-require 'RESTPHP/RESTPHP_Server.php';
+require_once 'RESTPHP/RESTPHP.php';
 
 class Example extends RESTPHP_Server {
 	private $dbH;

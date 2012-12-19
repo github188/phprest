@@ -1,5 +1,5 @@
 <?php
-require_once 'RESTPHP/RESTPHP_Client.php';
+require_once 'RESTPHP/RESTPHP.php';
 
 $url = sprintf("%s%s", $_SERVER['HTTP_HOST'], dirname($_SERVER['PHP_SELF']) . "/example-server.php");
 
@@ -27,7 +27,7 @@ switch($action) {
 		 * READ DEMO
 		 */
 		$exc->setMethod("READ");
-		$exc->setId(100);
+		$exc->setId(1);
 		break;
 
 	case 'UPDATE':

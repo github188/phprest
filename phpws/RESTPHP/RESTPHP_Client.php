@@ -1,6 +1,4 @@
 <?php
-require 'RESTPHP_Exceptions.php';
-
 class RESTPHP_Client {
 	private $method;
 	private $url;

@@ -1,6 +1,4 @@
 <?php
-require_once 'RESTPHP_Exceptions.php';
-
 class RESTPHP_Server {
 	protected $rMethod;
 	protected $id;
