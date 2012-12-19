@@ -6,7 +6,11 @@ class RESTPHP_Server {
 
 	const TEMPLATE_DIR = "";
 
-	public function __construct() {
+	public function __construct(&$authObj = NULL) {
+		if($this->isAuthorized($authObj) == FALSE) {
+			throw new RESTPHP_Server_Exception("Unauthorized requester", 500);
+		}
+
 		$this->rMethod = $this->determineRequest();
 		if($this->rMethod == "PUT") {
 			parse_str(file_get_contents("php://input"), $data);
@@ -15,6 +19,20 @@ class RESTPHP_Server {
 		}
 		$this->setData($data);
 		$this->setId();
+	}
+
+	protected function isAuthorized(&$authObj = NULL) {
+		if(is_null($authObj)) {
+			return TRUE;
+		} elseif(is_object($authObj)) {
+			if(!($authObj instanceof RESTPHP_Auth)) {
+				throw new RESTPHP_Server_Exception("Invalid authentication object", 501);
+			}
+
+			return $authObj->isValidRequester();
+		}
+
+		return FALSE;
 	}
 
 	protected function read() {
@@ -93,6 +111,11 @@ class RESTPHP_Server {
 
 
 	public function sendResponse($response, $code = 200) {
+		$c = get_class($this);
+		$c::Respond($response, $code);
+	}
+
+	public static function Respond($response, $code = 200) {
 		if($code != 200) {
 			$h = sprintf("HTTP/1.1 %d %s", $code, $response);
 			header($h, TRUE, $code);

@@ -6,8 +6,8 @@ class Example extends RESTPHP_Server {
 
 	const TEMPLATE_DIR = "templates";
 
-	public function __construct() {
-		parent::__construct();
+	public function __construct($authObj = NULL) {
+		parent::__construct($authObj);
 		$this->dbH = new PDO("mysql:host=10.10.10.29;dbname=test;", 'root', 'password');
 	}
 
@@ -77,6 +77,10 @@ class Example extends RESTPHP_Server {
 	}
 }
 
-$ex = new Example();
-$ex->handleRequest();
+try {
+	$ex = new Example(new NoAuth());
+	$ex->handleRequest();
+} catch(RESTPHP_Server_Exception $e) {
+	RESTPHP_Server::Respond($e->getMessage(), $e->getCode());
+}
 ?>

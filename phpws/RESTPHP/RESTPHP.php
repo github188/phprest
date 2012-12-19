@@ -2,6 +2,8 @@
 define("RESTPHP_PATH", dirname(__FILE__));
 define("RESTPHP_MIN_PHP", "5.3.0");
 
+require_once 'RESTPHP_Exceptions.php';
+
 /**
  * @see http://php.net/manual/en/function.phpversion.php
  */
@@ -25,6 +27,7 @@ function checkMinReqs() {
 spl_autoload_register(function ($class) {
 	$folders = array(
 			"",
+			"/interfaces",
 			"/plugins",
 	);
 
